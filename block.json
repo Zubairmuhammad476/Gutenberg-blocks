@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mfd-dashboard-widget/dashboard",
+    "version": "1.0.0",
+    "title": "MFD Dashboard Widget",
+    "category": "widgets",
+    "icon": "chart-bar",
+    "description": "Enterprise membership dashboard widget. Displays live user metrics — last login, profile completion strength meter, download history, and recent activity — fetched securely via a protected REST API endpoint.",
+    "keywords": ["dashboard", "metrics", "membership", "portal", "user", "analytics"],
+    "textdomain": "mfd-dashboard-widget",
+    "supports": {
+        "html": false,
+        "align": ["wide", "full"],
+        "color": {
+            "background": false,
+            "text": false
+        },
+        "spacing": {
+            "margin": true,
+            "padding": true
+        },
+        "interactivity": false
+    },
+    "attributes": {
+        "showLastLogin": {
+            "type": "boolean",
+            "default": true
+        },
+        "showStrength": {
+            "type": "boolean",
+            "default": true
+        },
+        "showDownloads": {
+            "type": "boolean",
+            "default": true
+        },
+        "showActivity": {
+            "type": "boolean",
+            "default": true
+        },
+        "accentColor": {
+            "type": "string",
+            "default": "#6366f1"
+        },
+        "containerWidth": {
+            "type": "string",
+            "default": "full",
+            "enum": ["full", "wide", "normal"]
+        }
+    },
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./frontend.js",
+    "render": "file:../templates/render.php"
+}

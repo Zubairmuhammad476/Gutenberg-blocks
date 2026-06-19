@@ -1,0 +1,41 @@
+{
+    "name": "mfd-dashboard-widget",
+    "version": "1.0.0",
+    "description": "Micro-Frontend Dashboard Widget — Gutenberg block build system.",
+    "private": true,
+    "homepage": "https://github.com/Zubairmuhammad476/Gutenberg-blocks",
+    "license": "GPL-2.0-or-later",
+    "author": "Zubair Muhammad <https://github.com/Zubairmuhammad476>",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start",
+        "lint:js": "wp-scripts lint-js src/js",
+        "lint:css": "wp-scripts lint-style src/css",
+        "format": "wp-scripts format",
+        "check-engines": "wp-scripts check-engines",
+        "check-licenses": "wp-scripts check-licenses",
+        "packages-update": "wp-scripts packages-update"
+    },
+    "dependencies": {
+        "dompurify": "^3.1.6",
+        "@wordpress/blocks": "^12.0.0",
+        "@wordpress/block-editor": "^12.0.0",
+        "@wordpress/components": "^27.0.0",
+        "@wordpress/data": "^10.0.0",
+        "@wordpress/element": "^5.0.0",
+        "@wordpress/i18n": "^4.0.0",
+        "@wordpress/icons": "^9.0.0",
+        "@wordpress/primitives": "^3.0.0"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^29.0.0",
+        "autoprefixer": "^10.4.20",
+        "postcss": "^8.4.47",
+        "postcss-loader": "^8.1.1",
+        "tailwindcss": "^3.4.14"
+    },
+    "browserslist": [
+        "extends @wordpress/browserslist-config"
+    ]
+}
