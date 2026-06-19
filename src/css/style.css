@@ -1,0 +1,397 @@
+/**
+ * style.css — MFD Dashboard Widget
+ *
+ * Frontend stylesheet loaded on the public-facing page.
+ * Compiled through PostCSS + Tailwind CSS with the `mfd-` prefix.
+ *
+ * Load order: WordPress injects this BEFORE frontend.js renders.
+ * Purpose: skeleton animation, block shell layout, and all hydrated UI styles.
+ *
+ * All Tailwind utilities below use the `mfd-` prefix (configured in tailwind.config.js).
+ * Classes without the prefix are bespoke animations/CSS custom property assignments
+ * that Tailwind cannot generate.
+ */
+
+/* =========================================================================
+   1. Tailwind base directives
+   ========================================================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================================
+   2. Poppins font — loaded from Google Fonts CDN.
+   Only the frontend stylesheet imports this. The editor.css file imports
+   separately so font rendering is correct in both contexts.
+   ========================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================================================================
+   3. Block shell — base container styles.
+   All selectors are scoped under .mfd-dashboard-block (the root div
+   rendered by RenderCallback.php) to ensure zero bleed into themes.
+   ========================================================================= */
+@layer components {
+
+    .mfd-dashboard-block {
+        font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: hsl(215, 25%, 27%); /* mfd-slate-700 */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* -----------------------------------------------------------------------
+       4. Loading Skeleton system
+       ----------------------------------------------------------------------- */
+
+    .mfd-skeleton {
+        @apply mfd-w-full mfd-space-y-4 mfd-p-6;
+    }
+
+    .mfd-skeleton__header {
+        @apply mfd-flex mfd-items-center mfd-gap-4;
+    }
+
+    .mfd-skeleton__avatar {
+        @apply mfd-w-16 mfd-h-16 mfd-rounded-full mfd-shrink-0;
+    }
+
+    .mfd-skeleton__header-text {
+        @apply mfd-flex mfd-flex-col mfd-gap-2 mfd-flex-1;
+    }
+
+    .mfd-skeleton__line {
+        @apply mfd-h-4 mfd-rounded-mfd-pill;
+    }
+
+    .mfd-skeleton__line--wide   { @apply mfd-w-3/4; }
+    .mfd-skeleton__line--narrow { @apply mfd-w-1/3; }
+
+    .mfd-skeleton__cards {
+        @apply mfd-grid mfd-grid-cols-3 mfd-gap-4;
+    }
+
+    .mfd-skeleton__card {
+        @apply mfd-h-24 mfd-rounded-mfd-card;
+    }
+
+    .mfd-skeleton__meter {
+        @apply mfd-h-6 mfd-w-full mfd-rounded-mfd-pill;
+    }
+
+    .mfd-skeleton__table {
+        @apply mfd-space-y-3;
+    }
+
+    .mfd-skeleton__row {
+        @apply mfd-flex mfd-gap-3;
+    }
+
+    .mfd-skeleton__cell {
+        @apply mfd-h-5 mfd-rounded mfd-w-1/4;
+    }
+
+    .mfd-skeleton__cell--wide {
+        @apply mfd-w-1/2;
+    }
+
+    /* Shimmer animation — uses gradient sweep across the skeleton element. */
+    .mfd-skeleton__pulse {
+        background: linear-gradient(
+            90deg,
+            hsl(210, 40%, 93%) 25%,
+            hsl(210, 40%, 97%) 50%,
+            hsl(210, 40%, 93%) 75%
+        );
+        background-size: 200% 100%;
+        animation: mfd-shimmer 1.6s ease-in-out infinite;
+    }
+
+    /* -----------------------------------------------------------------------
+       5. Hydrated Dashboard UI Components
+       ----------------------------------------------------------------------- */
+
+    /* Main dashboard grid */
+    .mfd-dashboard {
+        @apply mfd-w-full mfd-animate-mfd-slide-up;
+    }
+
+    /* Profile header card */
+    .mfd-profile-card {
+        @apply mfd-flex mfd-items-center mfd-gap-5
+               mfd-bg-white mfd-rounded-mfd-card mfd-shadow-mfd-card
+               mfd-p-6 mfd-mb-5;
+    }
+
+    .mfd-profile-avatar {
+        @apply mfd-w-16 mfd-h-16 mfd-rounded-full mfd-object-cover
+               mfd-ring-2 mfd-ring-mfd-indigo-200 mfd-shrink-0;
+    }
+
+    .mfd-profile-name {
+        @apply mfd-text-mfd-xl mfd-font-semibold mfd-text-mfd-slate-800
+               mfd-leading-tight mfd-tracking-tight;
+    }
+
+    .mfd-profile-email {
+        @apply mfd-text-mfd-sm mfd-text-mfd-slate-500 mfd-mt-0.5;
+    }
+
+    /* Metric cards row */
+    .mfd-metric-grid {
+        @apply mfd-grid mfd-grid-cols-1 mfd-gap-4
+               sm:mfd-grid-cols-3 mfd-mb-5;
+    }
+
+    .mfd-metric-card {
+        @apply mfd-bg-white mfd-rounded-mfd-card mfd-shadow-mfd-card
+               mfd-p-5 mfd-flex mfd-flex-col mfd-gap-1
+               mfd-transition-shadow mfd-duration-mfd-normal
+               hover:mfd-shadow-mfd-card-md mfd-cursor-default;
+    }
+
+    .mfd-metric-card__label {
+        @apply mfd-text-mfd-xs mfd-font-medium mfd-uppercase mfd-tracking-widest
+               mfd-text-mfd-slate-400;
+    }
+
+    .mfd-metric-card__value {
+        @apply mfd-text-mfd-2xl mfd-font-bold mfd-text-mfd-slate-800 mfd-leading-none;
+    }
+
+    .mfd-metric-card__sub {
+        @apply mfd-text-mfd-xs mfd-text-mfd-slate-500;
+    }
+
+    /* -----------------------------------------------------------------------
+       6. Profile Strength Meter (SVG-based circular progress)
+       ----------------------------------------------------------------------- */
+
+    .mfd-strength-section {
+        @apply mfd-bg-white mfd-rounded-mfd-card mfd-shadow-mfd-card mfd-p-6 mfd-mb-5;
+    }
+
+    .mfd-strength-header {
+        @apply mfd-flex mfd-items-center mfd-justify-between mfd-mb-5;
+    }
+
+    .mfd-strength-title {
+        @apply mfd-text-mfd-md mfd-font-semibold mfd-text-mfd-slate-700;
+    }
+
+    .mfd-strength-badge {
+        @apply mfd-text-mfd-2xs mfd-font-semibold mfd-uppercase mfd-tracking-widest
+               mfd-px-2.5 mfd-py-1 mfd-rounded-mfd-pill
+               mfd-bg-mfd-indigo-50 mfd-text-mfd-indigo-600;
+    }
+
+    .mfd-strength-ring-wrap {
+        @apply mfd-flex mfd-items-center mfd-gap-8;
+    }
+
+    /* SVG ring container — fixed 96x96 */
+    .mfd-strength-ring {
+        @apply mfd-shrink-0;
+        width: 96px;
+        height: 96px;
+    }
+
+    .mfd-strength-ring__track {
+        fill: none;
+        stroke: hsl(210, 40%, 91%);
+        stroke-width: 8;
+    }
+
+    .mfd-strength-ring__fill {
+        fill: none;
+        stroke-width: 8;
+        stroke-linecap: round;
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+        /* strokeDashoffset is set dynamically by frontend.js via CSS var */
+        stroke-dasharray: 251;
+        stroke-dashoffset: 251;
+        transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                    stroke 0.4s ease;
+    }
+
+    .mfd-strength-score {
+        @apply mfd-text-mfd-xl mfd-font-bold mfd-fill-mfd-slate-800;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* Strength breakdown bars */
+    .mfd-strength-items {
+        @apply mfd-flex mfd-flex-col mfd-gap-3 mfd-flex-1;
+    }
+
+    .mfd-strength-item {
+        @apply mfd-flex mfd-flex-col mfd-gap-1.5;
+    }
+
+    .mfd-strength-item__label {
+        @apply mfd-flex mfd-justify-between mfd-text-mfd-xs mfd-text-mfd-slate-600;
+    }
+
+    .mfd-strength-bar {
+        @apply mfd-h-1.5 mfd-rounded-mfd-pill mfd-bg-mfd-slate-100 mfd-overflow-hidden;
+    }
+
+    .mfd-strength-bar__fill {
+        @apply mfd-h-full mfd-rounded-mfd-pill mfd-bg-mfd-indigo-500;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 0%;
+    }
+
+    /* -----------------------------------------------------------------------
+       7. Activity Grid / Datatable
+       ----------------------------------------------------------------------- */
+
+    .mfd-activity-section {
+        @apply mfd-bg-white mfd-rounded-mfd-card mfd-shadow-mfd-card mfd-overflow-hidden;
+    }
+
+    .mfd-activity-header {
+        @apply mfd-flex mfd-items-center mfd-justify-between
+               mfd-px-6 mfd-py-4 mfd-border-b mfd-border-mfd-slate-100;
+    }
+
+    .mfd-activity-title {
+        @apply mfd-text-mfd-md mfd-font-semibold mfd-text-mfd-slate-700;
+    }
+
+    .mfd-activity-count {
+        @apply mfd-text-mfd-xs mfd-font-medium mfd-text-mfd-slate-400;
+    }
+
+    .mfd-activity-table {
+        @apply mfd-w-full;
+    }
+
+    .mfd-activity-table thead tr {
+        @apply mfd-bg-mfd-slate-50;
+    }
+
+    .mfd-activity-table th {
+        @apply mfd-px-6 mfd-py-3 mfd-text-left mfd-text-mfd-2xs
+               mfd-font-semibold mfd-uppercase mfd-tracking-widest
+               mfd-text-mfd-slate-400;
+    }
+
+    .mfd-activity-table td {
+        @apply mfd-px-6 mfd-py-4 mfd-text-mfd-sm mfd-text-mfd-slate-600
+               mfd-border-t mfd-border-mfd-slate-50;
+    }
+
+    .mfd-activity-table tbody tr {
+        @apply mfd-transition-colors mfd-duration-mfd-fast
+               hover:mfd-bg-mfd-slate-50;
+    }
+
+    .mfd-activity-empty {
+        @apply mfd-text-center mfd-text-mfd-sm mfd-text-mfd-slate-400
+               mfd-py-10 mfd-px-6;
+    }
+
+    /* Event type badge */
+    .mfd-event-badge {
+        @apply mfd-inline-flex mfd-items-center mfd-gap-1.5
+               mfd-text-mfd-2xs mfd-font-semibold mfd-uppercase mfd-tracking-wide
+               mfd-px-2 mfd-py-0.5 mfd-rounded-mfd-pill;
+    }
+
+    .mfd-event-badge--login    { @apply mfd-bg-blue-50   mfd-text-blue-600; }
+    .mfd-event-badge--download { @apply mfd-bg-green-50  mfd-text-green-600; }
+    .mfd-event-badge--update   { @apply mfd-bg-yellow-50 mfd-text-yellow-700; }
+    .mfd-event-badge--default  { @apply mfd-bg-mfd-slate-100 mfd-text-mfd-slate-500; }
+
+    /* -----------------------------------------------------------------------
+       8. Pagination Controls
+       ----------------------------------------------------------------------- */
+
+    .mfd-pagination {
+        @apply mfd-flex mfd-items-center mfd-justify-between
+               mfd-px-6 mfd-py-3 mfd-border-t mfd-border-mfd-slate-100;
+    }
+
+    .mfd-pagination__info {
+        @apply mfd-text-mfd-xs mfd-text-mfd-slate-400;
+    }
+
+    .mfd-pagination__controls {
+        @apply mfd-flex mfd-gap-2;
+    }
+
+    .mfd-btn-page {
+        @apply mfd-inline-flex mfd-items-center mfd-gap-1.5
+               mfd-text-mfd-xs mfd-font-medium
+               mfd-px-3 mfd-py-1.5 mfd-rounded-lg
+               mfd-border mfd-border-mfd-slate-200
+               mfd-text-mfd-slate-600 mfd-bg-white
+               mfd-transition-all mfd-duration-mfd-fast
+               hover:mfd-border-mfd-indigo-300 hover:mfd-text-mfd-indigo-600 hover:mfd-bg-mfd-indigo-50
+               disabled:mfd-opacity-40 disabled:mfd-cursor-not-allowed
+               disabled:hover:mfd-border-mfd-slate-200 disabled:hover:mfd-text-mfd-slate-600
+               disabled:hover:mfd-bg-white;
+    }
+
+    /* -----------------------------------------------------------------------
+       9. Error state
+       ----------------------------------------------------------------------- */
+
+    .mfd-error-state {
+        @apply mfd-flex mfd-flex-col mfd-items-center mfd-justify-center
+               mfd-py-12 mfd-text-center
+               mfd-bg-white mfd-rounded-mfd-card mfd-shadow-mfd-card;
+    }
+
+    .mfd-error-state__icon {
+        @apply mfd-w-12 mfd-h-12 mfd-text-mfd-error mfd-mb-4;
+    }
+
+    .mfd-error-state__title {
+        @apply mfd-text-mfd-md mfd-font-semibold mfd-text-mfd-slate-700 mfd-mb-2;
+    }
+
+    .mfd-error-state__message {
+        @apply mfd-text-mfd-sm mfd-text-mfd-slate-500 mfd-mb-5 mfd-max-w-xs;
+    }
+
+    .mfd-btn-retry {
+        @apply mfd-inline-flex mfd-items-center mfd-gap-2
+               mfd-text-mfd-sm mfd-font-semibold
+               mfd-px-5 mfd-py-2.5 mfd-rounded-lg
+               mfd-bg-mfd-indigo-500 mfd-text-white
+               mfd-transition-all mfd-duration-mfd-normal mfd-shadow-mfd-card
+               hover:mfd-bg-mfd-indigo-600 hover:mfd-shadow-mfd-card-md
+               active:mfd-scale-95;
+    }
+
+    /* -----------------------------------------------------------------------
+       10. noscript notice
+       ----------------------------------------------------------------------- */
+
+    .mfd-noscript-notice {
+        @apply mfd-text-center mfd-text-mfd-sm mfd-text-mfd-slate-500
+               mfd-bg-mfd-slate-50 mfd-rounded-mfd-card mfd-p-6 mfd-my-4;
+    }
+
+    /* -----------------------------------------------------------------------
+       11. Responsive adjustments
+       ----------------------------------------------------------------------- */
+
+    @screen sm {
+        .mfd-skeleton__cards {
+            @apply mfd-grid-cols-3;
+        }
+    }
+
+    /* Below sm: stack metric cards vertically */
+    @screen xs {
+        .mfd-metric-grid {
+            @apply mfd-grid-cols-1;
+        }
+    }
+}

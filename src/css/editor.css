@@ -1,0 +1,191 @@
+/**
+ * editor.css — MFD Dashboard Widget
+ *
+ * Styles loaded exclusively inside the Gutenberg block editor.
+ * Scopes InspectorControls panel and editor preview aesthetics.
+ *
+ * Does NOT include Tailwind utility layers — the editor uses
+ * @wordpress/components for all inspector UI. Tailwind is only
+ * bundled in style.css (frontend) to keep the editor bundle lean.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================================================================
+   MFD Inspector Panel Styles
+   Scoped under .mfd-inspector to avoid clashing with native WP components.
+   ========================================================================= */
+
+.mfd-inspector {
+    font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+}
+
+.mfd-inspector__section {
+    margin-bottom: 16px;
+}
+
+.mfd-inspector__label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.mfd-inspector__description {
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-top: 4px;
+}
+
+/* =========================================================================
+   Editor preview shell — mimics the frontend block without live data.
+   ========================================================================= */
+
+.mfd-editor-preview {
+    font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 24px;
+}
+
+.mfd-editor-preview__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.mfd-editor-preview__avatar-placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mfd-editor-preview__avatar-icon {
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+}
+
+.mfd-editor-preview__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.3;
+}
+
+.mfd-editor-preview__sub {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+}
+
+.mfd-editor-preview__cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mfd-editor-preview__card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 14px;
+    opacity: 0.9;
+}
+
+.mfd-editor-preview__card-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin-bottom: 6px;
+}
+
+.mfd-editor-preview__card-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1;
+}
+
+/* Toggle group visibility (hidden card fades) */
+.mfd-editor-preview__card--hidden {
+    opacity: 0.35;
+    filter: grayscale(1);
+    pointer-events: none;
+}
+
+.mfd-editor-preview__widget-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #7c3aed;
+    margin-bottom: 16px;
+}
+
+.mfd-editor-preview__meter {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.mfd-editor-preview__meter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    border-radius: 999px;
+    width: 72%; /* Static editor preview value */
+    transition: width 0.6s ease;
+}
+
+/* =========================================================================
+   Color swatch component (for accentColor attribute)
+   ========================================================================= */
+
+.mfd-color-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.mfd-color-preview__swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.mfd-color-preview__label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
