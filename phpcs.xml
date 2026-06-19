@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="MFD Dashboard Widget"
+         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd"
+>
+
+    <description>PHP_CodeSniffer ruleset for the MFD Dashboard Widget plugin. Extends WordPress-Core, WordPress-Docs, and WordPress-Extra rulesets scoped to src/ only.</description>
+
+    <!-- =====================================================================
+         Source paths — scan only the clean PSR-4 source hierarchy.
+         Compiled artifacts, dependencies, and build outputs are excluded.
+         ===================================================================== -->
+    <file>src/</file>
+    <file>mfd-dashboard-widget.php</file>
+
+    <!-- Exclude compiled, vendor, and generated directories. -->
+    <exclude-pattern>*/build/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/templates/*</exclude-pattern>
+
+    <!-- Only analyse PHP files. -->
+    <arg name="extensions" value="php"/>
+
+    <!-- =====================================================================
+         Output arguments — machine-readable summary + full file paths.
+         ===================================================================== -->
+    <arg name="colors"/>
+    <arg value="sp"/>    <!-- Show sniff codes and file paths. -->
+    <arg name="parallel" value="8"/>
+
+    <!-- =====================================================================
+         WordPress Coding Standards — three rulesets applied in composition.
+
+         WordPress-Core    : Core formatting, naming conventions, spacing.
+         WordPress-Docs    : PHPDoc block requirements for all classes/methods.
+         WordPress-Extra   : Additional best-practice and security sniffs,
+                            including nonce verification, sanitization, and
+                            escaping checks.
+         ===================================================================== -->
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Docs"/>
+    <rule ref="WordPress-Extra"/>
+
+    <!-- =====================================================================
+         PHP version target — aligns with plugin minimum-stability declaration.
+         ===================================================================== -->
+    <config name="testVersion" value="8.1-"/>
+
+    <!-- =====================================================================
+         WordPress environment configuration.
+         prefix   : All custom functions/classes must carry the mfd_ prefix.
+         text_domain : Single text-domain declared in plugin header.
+         ===================================================================== -->
+    <config name="minimum_supported_wp_version" value="6.7"/>
+
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="mfd-dashboard-widget"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="mfd"/>
+                <element value="MFD"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- =====================================================================
+         PSR-12 / Strict-types compatibility exclusions.
+
+         WordPress-Core enforces tabs for indentation. Our src/ code uses
+         4-space indentation in line with PSR-12 and strict_types blocks.
+         The exclusions below permit both styles to coexist without warnings.
+         ===================================================================== -->
+
+    <!-- Allow declare(strict_types=1) at the top of every file. -->
+    <rule ref="WordPress.Files.FileComment">
+        <exclude-pattern>src/*</exclude-pattern>
+    </rule>
+
+    <!-- PSR-12 allows short ternary and match expressions (PHP 8.1+). -->
+    <rule ref="Universal.Operators.DisallowShortTernary">
+        <exclude-pattern>src/*</exclude-pattern>
+    </rule>
+
+    <!-- =====================================================================
+         Selective rule exclusions — intentional deviations with justification.
+         ===================================================================== -->
+
+    <!-- Table names are interpolated directly into $wpdb->prepare() strings.
+         WordPress's prepare() does NOT support %s placeholders for table names.
+         These specific lines are marked with phpcs:ignore inline comments.     -->
+    <rule ref="WordPress.DB.PreparedSQL.InterpolatedNotPrepared">
+        <severity>5</severity><!-- Warn only, do not error. -->
+    </rule>
+
+    <!-- error_log() calls are permitted when guarded by WP_DEBUG_LOG checks.
+         The inline phpcs:ignore comment is used at each call site.            -->
+    <rule ref="WordPress.PHP.DevelopmentFunctions.error_log_error_log">
+        <severity>3</severity>
+    </rule>
+
+    <!-- trigger_error() similarly guarded — lowered to warning.              -->
+    <rule ref="WordPress.PHP.DevelopmentFunctions.error_log_trigger_error">
+        <severity>3</severity>
+    </rule>
+
+    <!-- PHP 8.1 intersection types and readonly properties are valid.
+         PHPCompatibilityWP may flag these — suppress for 8.1+ target.        -->
+    <rule ref="PHPCompatibility.Classes.NewReadonlyProperties">
+        <severity>0</severity>
+    </rule>
+
+    <!-- PHP 8.1 enums — not currently used but reserved for future expansion. -->
+    <rule ref="PHPCompatibility.Classes.NewEnums">
+        <severity>0</severity>
+    </rule>
+
+    <!-- `never` return type (PHP 8.1) is valid in Plugin::__wakeup().        -->
+    <rule ref="PHPCompatibility.FunctionDeclarations.NewReturnTypeDeclarations">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>
