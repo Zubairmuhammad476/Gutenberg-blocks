@@ -69,12 +69,7 @@ final class BlockRegistrar
             return;
         }
 
-        register_block_type_from_metadata(
-            $blockJsonDir,
-            [
-                'render_callback' => [new RenderCallback(), 'render'],
-            ]
-        );
+        register_block_type_from_metadata( $blockJsonDir );
 
         // Inject server-side data into the frontend view script AFTER
         // the block (and its view script) has been registered.
